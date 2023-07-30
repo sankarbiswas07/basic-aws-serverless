@@ -1,0 +1,20 @@
+service: basic-aws-serverless
+provider:
+  name: aws
+  runtime: go1.x
+  profile: sankar.geotech.admin.practice # AWS profile name
+  region: ap-south-1 # AWS region
+  lambdaHashingVersion: "20201221" # Set to the new algorithm
+package:
+  patterns:
+    - "!./**"
+    - "./bin/**"
+functions:
+  basic-aws-serverless:
+    handler: bin/basic-aws-serverless
+    events:
+      - http:
+          path: /
+          method: get
+          cors: true
+          private: false
