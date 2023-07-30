@@ -11,6 +11,8 @@ deploy: clean build
 .PHONY: build
 build:
 	CGO_ENABLED=$(CGO_ENABLED) GOARCH=$(GOARCH) GOOS=$(GOOS) go build -o $(BINARY_PATH)/basic-aws-serverless cmd/main.go
+	CGO_ENABLED=$(CGO_ENABLED) GOARCH=$(GOARCH) GOOS=$(GOOS) go build -o $(BINARY_PATH)/get cmd/get.go
+	CGO_ENABLED=$(CGO_ENABLED) GOARCH=$(GOARCH) GOOS=$(GOOS) go build -o $(BINARY_PATH)/post cmd/post.go
 
 .PHONY: clean
 clean:

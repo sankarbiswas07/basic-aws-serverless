@@ -6,46 +6,28 @@ import (
 	// "encoding/json"
 	"github.com/aws/aws-lambda-go/events"
 	"github.com/aws/aws-lambda-go/lambda"
+
+	"github.com/sankarbiswas07/basic-aws-serverless/cmd/get"
+	"github.com/sankarbiswas07/basic-aws-serverless/cmd/post"
 )
 
+func router(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+ 	// Define your routes and handlers here
+	 switch request.Path {
+	case "/get":
+		return functionA.get(ctx, request)
 
-type Request struct {
-	Message string `json:"message"`
-}
+	case "/post":
+		return functionB.post(ctx, request)
 
-type Response struct {
-	StatusCode int    `json:"statusCode"`
-	Headers    map[string]string `json:"headers"`
-	Body       string `json:"body"`
-}
-
-func handler(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-  fmt.Println("Hello, World!")
-
-	// Accessing the payload/body
-	body := request.Body
-
-	// Accessing query string parameters
-	paramValue := request.QueryStringParameters["paramName"]
-
-	// Accessing headers
-	headerValue := request.Headers["HeaderName"]
-
-	// Your logic here...
-	fmt.Println("Payload:", body)
-	fmt.Println("Query Parameter:", paramValue)
-	fmt.Println("Header:", headerValue)
-		
-	response := events.APIGatewayProxyResponse{
-		StatusCode: 200,
-		Headers:    map[string]string{
-			"Content-Type": "application/json",
-		},
-		Body: "Hello from Lambda! " + headerValue + " .",
+	default:
+		return events.APIGatewayProxyResponse{
+			StatusCode: 404,
+			Body:       "Not Found",
+		}, nil
 	}
-	return response, nil
 }
 
 func main() {
-	lambda.Start(handler)
+	lambda.Start(router)
 }

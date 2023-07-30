@@ -15,6 +15,24 @@ functions:
     events:
       - http:
           path: /
+          method: any
+          cors: true
+          private: false
+  
+  basic-aws-serverless:
+    handler: bin/get
+    events:
+      - http:
+          path: /
           method: get
+          cors: true
+          private: false
+
+  basic-aws-serverless:
+    handler: bin/post
+    events:
+      - http:
+          path: /
+          method: post
           cors: true
           private: false
