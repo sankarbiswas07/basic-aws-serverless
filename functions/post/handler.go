@@ -1,11 +1,13 @@
+// post/ handler > example: Function B
 package main
 
 import (
 	"fmt"
 	"context"
-	// "encoding/json"
 	"github.com/aws/aws-lambda-go/events"
+	"github.com/aws/aws-lambda-go/lambda"
 )
+
 
 type Request struct {
 	Message string `json:"message"`
@@ -17,8 +19,8 @@ type Response struct {
 	Body       string `json:"body"`
 }
 
-func get(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
-  fmt.Println("Hello, World!")
+func post(ctx context.Context, request events.APIGatewayProxyRequest) (events.APIGatewayProxyResponse, error) {
+  fmt.Println("post: Hello, World!")
 
 	// Accessing the payload/body
 	body := request.Body
@@ -39,7 +41,11 @@ func get(ctx context.Context, request events.APIGatewayProxyRequest) (events.API
 		Headers:    map[string]string{
 			"Content-Type": "application/json",
 		},
-		Body: "POST: Hello from Lambda! " + headerValue + " .",
+		Body: "post: Hello from Lambda! " + headerValue + " .",
 	}
 	return response, nil
+}
+
+func main() {
+	lambda.Start(post)
 }

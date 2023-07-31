@@ -10,16 +10,7 @@ package:
     - "!./**"
     - "./bin/**"
 functions:
-  basic-aws-serverless:
-    handler: bin/basic-aws-serverless
-    events:
-      - http:
-          path: /
-          method: any
-          cors: true
-          private: false
-  
-  basic-aws-serverless:
+  basic-aws-serverless-get:
     handler: bin/get
     events:
       - http:
@@ -28,7 +19,7 @@ functions:
           cors: true
           private: false
 
-  basic-aws-serverless:
+  basic-aws-serverless-post:
     handler: bin/post
     events:
       - http:
