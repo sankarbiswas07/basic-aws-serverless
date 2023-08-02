@@ -1,0 +1,38 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+
+Resources:
+  MyApi:
+    Type: AWS::Serverless::Api
+    Properties:
+      StageName: dev
+      Auth:
+        DefaultAuthorizer: NONE # Set to 'NONE' for public access without authentication
+
+  FunctionGet:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: basic-aws-serverless-get
+      Runtime: go1.x
+      Handler: main
+      CodeUri: ./bin/get
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: GET
+
+  FunctionPost:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: basic-aws-serverless-post
+      Runtime: go1.x
+      Handler: main
+      CodeUri: ./bin/post
+      Events:
+        ApiEvent:
+          Type: Api
+          Properties:
+            Path: /
+            Method: POST
